@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Event sales report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    color: #1a1a1a;
+    background: #ffffff;
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+  }
+  p.subtitle {
+    color: #5f5e5a;
+    margin: 0 0 2rem;
+    font-size: 14px;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 2.5rem 0 0.5rem;
+    border-bottom: 1px solid #e1e0d9;
+    padding-bottom: 0.4rem;
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .metric-card {
+    background: #f7f6f3;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .metric-label {
+    font-size: 13px;
+    color: #5f5e5a;
+    margin: 0 0 4px;
+  }
+  .metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #5f5e5a;
+  }
+  .legend span.swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+  }
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    margin-bottom: 1rem;
+  }
+  .chart-wrap.pie {
+    height: 360px;
+  }
+  .note {
+    font-size: 13px;
+    color: #5f5e5a;
+    margin-top: 0.5rem;
+  }
+  footer {
+    margin-top: 3rem;
+    font-size: 12px;
+    color: #898781;
+    border-top: 1px solid #e1e0d9;
+    padding-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Event sales report</h1>
+<p class="subtitle">2026 season to date, with 2025 shown for comparison &middot; generated 25 June 2026</p>
+
+<div class="metrics">
+  <div class="metric-card">
+    <p class="metric-label">2026 net income so far</p>
+    <p class="metric-value">&pound;8,558.55</p>
+  </div>
+  <div class="metric-card">
+    <p class="metric-label">2026 tickets sold so far</p>
+    <p class="metric-value">78</p>
+  </div>
+</div>
+
+<h2>Cumulative net income</h2>
+<p class="note">Aligned by months since each season&rsquo;s first sale, not calendar date.</p>
+<div class="legend">
+  <span class="legend-item"><span class="swatch" style="background:#2a78d6;"></span>2026</span>
+  <span class="legend-item"><span class="swatch" style="background:#c3c2b7;"></span>2025</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="netChart" role="img" aria-label="Line chart comparing cumulative net income in 2026 vs 2025, aligned by months since each season's first sale. 2026 reached £8,558.55 by month 3, while 2025 had reached roughly £6,200 by the same point and continued to £18,839.25 by month 4.7.">2026 cumulative net income reached £8,558.55 by month 3 of the selling season. 2025 reached about £6,200 by month 3 and finished at £18,839.25 by month 4.7.</canvas>
+</div>
+
+<h2>Cumulative ticket sales</h2>
+<p class="note">Aligned by months since each season&rsquo;s first sale, not calendar date.</p>
+<div class="legend">
+  <span class="legend-item"><span class="swatch" style="background:#1baf7a;"></span>2026</span>
+  <span class="legend-item"><span class="swatch" style="background:#c3c2b7;"></span>2025</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="ticketChart" role="img" aria-label="Line chart comparing cumulative ticket sales in 2026 vs 2025, aligned by months since each season's first sale. 2026 reached 78 tickets by month 3, while 2025 had reached around 60 tickets by the same point and finished at 185 tickets by month 4.7.">2026 cumulative ticket sales reached 78 by month 3 of the selling season. 2025 reached about 60 tickets by month 3 and finished at 185 by month 4.7.</canvas>
+</div>
+
+<h2>2026 gross income by category</h2>
+<div class="legend" id="pieLegend"></div>
+<div class="chart-wrap pie">
+  <canvas id="pieChart" role="img" aria-label="Pie chart of 2026 gross income by category: Full pass £7,561.77, Saturday pass £700, T-shirt £482.58, Sunday pass £90, Community fund £85.65, Friday night pass £75">2026 gross income breakdown: Full pass £7,561.77 (84.1%), Saturday pass £700 (7.8%), T-shirt £482.58 (5.4%), Sunday pass £90 (1.0%), Community fund £85.65 (1.0%), Friday night pass £75 (0.8%).</canvas>
+</div>
+
+<footer>
+  Net income figures are after Stripe and platform fees. Ticket counts are net of cancellations &mdash; each refund was traced to the specific ticket or extra it matched, rather than estimated. Hover over any chart for exact values.
+</footer>
+
+<script>
+const net2026 = [{"x":0.0,"y":129.02},{"x":0.0,"y":297.44},{"x":0.01,"y":421.54},{"x":0.01,"y":545.64},{"x":0.01,"y":669.74},{"x":0.02,"y":813.54},{"x":0.05,"y":942.56},{"x":0.07,"y":1086.36},{"x":0.08,"y":1215.38},{"x":0.09,"y":1339.48},{"x":0.59,"y":1483.28},{"x":0.84,"y":1636.93},{"x":0.92,"y":1770.88},{"x":1.14,"y":2019.78},{"x":1.14,"y":2163.58},{"x":1.18,"y":2143.58},{"x":1.19,"y":2272.6},{"x":1.4,"y":2396.7},{"x":1.93,"y":2518.52},{"x":1.94,"y":2642.62},{"x":2.2,"y":2765.42},{"x":2.63,"y":2889.52},{"x":3.69,"y":3013.62},{"x":3.77,"y":3137.72},{"x":5.82,"y":3261.82},{"x":5.96,"y":3385.92},{"x":9.17,"y":3510.02},{"x":15.79,"y":3634.12},{"x":16.91,"y":3880.42},{"x":17.07,"y":4004.52},{"x":21.07,"y":4292.41},{"x":21.27,"y":4420.08},{"x":22.99,"y":4544.18},{"x":23.83,"y":4692.9},{"x":25.91,"y":4834.07},{"x":28.11,"y":4958.17},{"x":32.96,"y":5106.89},{"x":33.21,"y":5250.69},{"x":33.26,"y":5374.79},{"x":35.1,"y":5503.81},{"x":43.98,"y":5627.91},{"x":46.03,"y":5771.71},{"x":55.69,"y":5920.43},{"x":56.96,"y":6169.33},{"x":56.99,"y":6216.63},{"x":56.99,"y":6263.93},{"x":56.99,"y":6311.23},{"x":57.0,"y":6378.23},{"x":57.05,"y":6445.23},{"x":57.08,"y":6492.53},{"x":57.1,"y":6578.22},{"x":57.84,"y":6645.22},{"x":57.91,"y":6894.12},{"x":58.86,"y":6941.42},{"x":61.62,"y":7073.21},{"x":61.76,"y":7215.51},{"x":62.77,"y":6955.51},{"x":64.03,"y":6930.51},{"x":66.12,"y":7071.68},{"x":67.12,"y":7195.78},{"x":67.8,"y":7218.64},{"x":68.67,"y":7362.44},{"x":71.75,"y":7409.74},{"x":72.11,"y":7457.04},{"x":72.56,"y":7518.73},{"x":75.98,"y":7640.55},{"x":76.84,"y":7762.37},{"x":77.72,"y":7909.54},{"x":77.9,"y":8033.64},{"x":80.16,"y":8100.14},{"x":83.69,"y":8243.94},{"x":84.11,"y":8339.04},{"x":86.11,"y":8487.76},{"x":88.82,"y":8558.55}];
+const net2025 = [{"x":0.0,"y":123.26},{"x":0.0,"y":246.13},{"x":0.0,"y":374.33},{"x":0.0,"y":639.98},{"x":0.0,"y":783.0},{"x":0.0,"y":926.02},{"x":0.0,"y":1068.59},{"x":0.0,"y":1353.94},{"x":0.0,"y":1501.9},{"x":0.0,"y":1623.48},{"x":0.0,"y":1745.06},{"x":0.0,"y":1863.39},{"x":0.0,"y":1986.26},{"x":0.0,"y":2109.52},{"x":0.01,"y":2249.49},{"x":0.01,"y":2338.18},{"x":0.01,"y":2466.38},{"x":0.01,"y":2589.25},{"x":0.02,"y":2737.21},{"x":0.02,"y":2980.59},{"x":0.04,"y":3103.85},{"x":0.05,"y":3251.81},{"x":0.06,"y":3404.23},{"x":0.06,"y":3547.25},{"x":0.06,"y":3670.12},{"x":0.06,"y":3813.14},{"x":0.07,"y":3940.94},{"x":0.08,"y":4085.75},{"x":0.11,"y":4238.17},{"x":0.13,"y":4361.43},{"x":0.14,"y":4484.3},{"x":0.5,"y":4766.68},{"x":0.65,"y":4889.94},{"x":0.76,"y":5135.89},{"x":0.78,"y":5288.31},{"x":0.99,"y":5411.57},{"x":1.06,"y":5533.15},{"x":1.58,"y":5779.87},{"x":2.1,"y":5942.65},{"x":2.73,"y":6070.85},{"x":3.9,"y":6194.11},{"x":4.86,"y":6253.17},{"x":4.89,"y":6376.04},{"x":5.03,"y":6528.46},{"x":5.59,"y":6671.48},{"x":7.18,"y":6823.9},{"x":9.91,"y":6678.9},{"x":10.53,"y":6821.92},{"x":17.73,"y":7078.51},{"x":20.12,"y":7201.77},{"x":22.13,"y":7354.19},{"x":23.0,"y":7477.06},{"x":23.16,"y":7757.21},{"x":25.0,"y":8042.56},{"x":25.77,"y":8175.7},{"x":27.02,"y":8298.96},{"x":27.09,"y":8422.22},{"x":27.56,"y":8565.24},{"x":30.87,"y":8713.2},{"x":32.17,"y":8983.67},{"x":32.54,"y":9126.24},{"x":33.21,"y":9249.11},{"x":33.87,"y":9372.37},{"x":35.1,"y":9218.74},{"x":43.64,"y":9277.8},{"x":45.86,"y":9524.52},{"x":47.7,"y":9667.09},{"x":48.18,"y":9922.89},{"x":50.86,"y":10045.76},{"x":50.93,"y":10168.63},{"x":51.0,"y":10309.71},{"x":51.1,"y":10432.58},{"x":52.02,"y":10555.45},{"x":56.01,"y":10732.47},{"x":62.07,"y":10761.8},{"x":62.1,"y":10879.74},{"x":62.1,"y":10754.74},{"x":62.71,"y":10784.07},{"x":62.88,"y":10862.64},{"x":62.95,"y":10921.51},{"x":62.96,"y":11000.08},{"x":63.2,"y":11142.65},{"x":63.8,"y":11269.11},{"x":65.1,"y":11395.57},{"x":68.9,"y":11454.44},{"x":68.93,"y":11577.31},{"x":69.61,"y":11695.25},{"x":70.85,"y":11754.12},{"x":71.81,"y":11832.69},{"x":72.63,"y":11950.63},{"x":72.9,"y":12073.5},{"x":73.05,"y":12132.37},{"x":73.8,"y":12393.09},{"x":75.1,"y":12535.66},{"x":76.09,"y":12594.53},{"x":76.1,"y":12734.5},{"x":77.09,"y":12857.37},{"x":78.17,"y":13009.79},{"x":82.06,"y":13068.66},{"x":83.43,"y":13191.53},{"x":83.98,"y":13250.4},{"x":84.09,"y":13373.27},{"x":84.59,"y":13461.67},{"x":84.65,"y":13505.3},{"x":89.28,"y":13656.13},{"x":89.57,"y":13897.58},{"x":89.76,"y":13956.45},{"x":89.88,"y":13985.78},{"x":90.6,"y":13860.78},{"x":91.87,"y":14003.35},{"x":92.63,"y":14126.22},{"x":92.74,"y":14254.02},{"x":93.06,"y":14376.89},{"x":95.99,"y":14455.46},{"x":96.81,"y":14514.33},{"x":97.93,"y":14632.27},{"x":98.18,"y":14710.84},{"x":102.95,"y":14769.71},{"x":103.9,"y":15015.65},{"x":106.57,"y":15148.37},{"x":107.21,"y":15271.24},{"x":107.66,"y":15640.25},{"x":108.03,"y":15577.75},{"x":108.78,"y":15699.33},{"x":108.79,"y":15758.2},{"x":108.8,"y":15879.78},{"x":109.0,"y":15958.35},{"x":109.09,"y":15987.68},{"x":110.07,"y":16017.01},{"x":110.07,"y":16159.58},{"x":112.94,"y":16193.83},{"x":116.12,"y":16233.01},{"x":117.03,"y":16296.8},{"x":118.77,"y":16428.13},{"x":118.93,"y":16491.92},{"x":120.5,"y":16624.64},{"x":123.05,"y":16658.89},{"x":123.62,"y":16794.01},{"x":124.06,"y":16860.26},{"x":126.1,"y":16997.9},{"x":127.0,"y":17135.54},{"x":127.78,"y":17233.79},{"x":132.07,"y":17268.04},{"x":132.52,"y":17331.83},{"x":133.94,"y":17398.08},{"x":133.98,"y":17540.65},{"x":136.83,"y":17671.98},{"x":137.96,"y":17735.77},{"x":138.14,"y":17770.02},{"x":138.16,"y":17803.91},{"x":138.58,"y":17867.7},{"x":138.67,"y":17891.85},{"x":139.02,"y":17950.72},{"x":139.12,"y":18018.17},{"x":139.19,"y":18086.16},{"x":139.7,"y":18120.41},{"x":139.94,"y":18183.03},{"x":139.96,"y":18217.28},{"x":140.0,"y":18345.07},{"x":140.1,"y":18476.4},{"x":140.22,"y":18609.12},{"x":140.64,"y":18672.91},{"x":140.85,"y":18706.53},{"x":141.09,"y":18839.25}];
+const tix2026 = [{"x":0.0,"y":1},{"x":0.0,"y":2},{"x":0.01,"y":3},{"x":0.01,"y":4},{"x":0.01,"y":5},{"x":0.02,"y":6},{"x":0.05,"y":7},{"x":0.07,"y":8},{"x":0.08,"y":9},{"x":0.09,"y":10},{"x":0.59,"y":11},{"x":0.84,"y":12},{"x":0.92,"y":13},{"x":1.14,"y":15},{"x":1.14,"y":16},{"x":1.18,"y":16},{"x":1.19,"y":17},{"x":1.4,"y":18},{"x":1.93,"y":19},{"x":1.94,"y":20},{"x":2.2,"y":21},{"x":2.63,"y":22},{"x":3.69,"y":23},{"x":3.77,"y":24},{"x":5.82,"y":25},{"x":5.96,"y":26},{"x":9.17,"y":27},{"x":15.79,"y":28},{"x":16.91,"y":30},{"x":17.07,"y":31},{"x":21.07,"y":33},{"x":21.27,"y":34},{"x":22.99,"y":35},{"x":23.83,"y":36},{"x":25.91,"y":37},{"x":28.11,"y":38},{"x":32.96,"y":39},{"x":33.21,"y":40},{"x":33.26,"y":41},{"x":35.1,"y":42},{"x":43.98,"y":43},{"x":46.03,"y":44},{"x":55.69,"y":45},{"x":56.96,"y":47},{"x":56.99,"y":48},{"x":56.99,"y":49},{"x":56.99,"y":50},{"x":57.0,"y":51},{"x":57.05,"y":52},{"x":57.08,"y":53},{"x":57.1,"y":55},{"x":57.84,"y":56},{"x":57.91,"y":58},{"x":58.86,"y":59},{"x":61.62,"y":62},{"x":61.76,"y":63},{"x":62.77,"y":61},{"x":64.03,"y":60},{"x":66.12,"y":61},{"x":67.12,"y":62},{"x":67.8,"y":63},{"x":68.67,"y":64},{"x":71.75,"y":65},{"x":72.11,"y":66},{"x":72.56,"y":67},{"x":75.98,"y":68},{"x":76.84,"y":69},{"x":77.72,"y":70},{"x":77.9,"y":71},{"x":80.16,"y":72},{"x":83.69,"y":73},{"x":84.11,"y":75},{"x":86.11,"y":76},{"x":88.82,"y":78}];
+const tix2025 = [{"x":0.0,"y":1},{"x":0.0,"y":2},{"x":0.0,"y":3},{"x":0.0,"y":5},{"x":0.0,"y":6},{"x":0.0,"y":7},{"x":0.0,"y":8},{"x":0.0,"y":10},{"x":0.0,"y":11},{"x":0.0,"y":12},{"x":0.0,"y":13},{"x":0.0,"y":14},{"x":0.0,"y":15},{"x":0.0,"y":16},{"x":0.01,"y":17},{"x":0.01,"y":18},{"x":0.01,"y":19},{"x":0.01,"y":20},{"x":0.02,"y":21},{"x":0.02,"y":23},{"x":0.04,"y":24},{"x":0.05,"y":25},{"x":0.06,"y":26},{"x":0.06,"y":27},{"x":0.06,"y":28},{"x":0.06,"y":29},{"x":0.07,"y":30},{"x":0.08,"y":31},{"x":0.11,"y":32},{"x":0.13,"y":33},{"x":0.14,"y":34},{"x":0.5,"y":36},{"x":0.65,"y":37},{"x":0.76,"y":39},{"x":0.78,"y":40},{"x":0.99,"y":41},{"x":1.06,"y":42},{"x":1.58,"y":44},{"x":2.1,"y":45},{"x":2.73,"y":46},{"x":3.9,"y":47},{"x":4.86,"y":48},{"x":4.89,"y":49},{"x":5.03,"y":50},{"x":5.59,"y":51},{"x":7.18,"y":52},{"x":9.91,"y":51},{"x":10.53,"y":52},{"x":17.73,"y":54},{"x":20.12,"y":55},{"x":22.13,"y":56},{"x":23.0,"y":57},{"x":23.16,"y":59},{"x":25.0,"y":61},{"x":25.77,"y":62},{"x":27.02,"y":63},{"x":27.09,"y":64},{"x":27.56,"y":65},{"x":30.87,"y":66},{"x":32.17,"y":68},{"x":32.54,"y":69},{"x":33.21,"y":70},{"x":33.87,"y":71},{"x":35.1,"y":70},{"x":43.64,"y":71},{"x":45.86,"y":73},{"x":47.7,"y":74},{"x":48.18,"y":76},{"x":50.86,"y":77},{"x":50.93,"y":78},{"x":51.0,"y":79},{"x":51.1,"y":80},{"x":52.02,"y":81},{"x":56.01,"y":83},{"x":62.07,"y":84},{"x":62.1,"y":86},{"x":62.1,"y":85},{"x":62.71,"y":86},{"x":62.88,"y":87},{"x":62.95,"y":89},{"x":62.96,"y":90},{"x":63.2,"y":91},{"x":63.8,"y":92},{"x":65.1,"y":93},{"x":68.9,"y":94},{"x":68.93,"y":95},{"x":69.61,"y":97},{"x":70.85,"y":98},{"x":71.81,"y":99},{"x":72.63,"y":101},{"x":72.9,"y":102},{"x":73.05,"y":103},{"x":73.8,"y":105},{"x":75.1,"y":106},{"x":76.09,"y":107},{"x":76.1,"y":108},{"x":77.09,"y":109},{"x":78.17,"y":110},{"x":82.06,"y":112},{"x":83.43,"y":113},{"x":83.98,"y":114},{"x":84.09,"y":115},{"x":84.59,"y":117},{"x":84.65,"y":118},{"x":89.28,"y":119},{"x":89.57,"y":121},{"x":89.76,"y":122},{"x":89.88,"y":123},{"x":90.6,"y":122},{"x":91.87,"y":123},{"x":92.63,"y":124},{"x":92.74,"y":125},{"x":93.06,"y":126},{"x":95.99,"y":127},{"x":96.81,"y":128},{"x":97.93,"y":130},{"x":98.18,"y":131},{"x":102.95,"y":132},{"x":103.9,"y":134},{"x":106.57,"y":135},{"x":107.21,"y":136},{"x":107.66,"y":139},{"x":108.03,"y":139},{"x":108.78,"y":140},{"x":108.79,"y":141},{"x":108.8,"y":142},{"x":109.0,"y":143},{"x":109.09,"y":144},{"x":110.07,"y":145},{"x":110.07,"y":146},{"x":112.94,"y":147},{"x":116.12,"y":148},{"x":117.03,"y":149},{"x":118.77,"y":150},{"x":118.93,"y":151},{"x":120.5,"y":152},{"x":123.05,"y":153},{"x":123.62,"y":154},{"x":124.06,"y":155},{"x":126.1,"y":156},{"x":127.0,"y":157},{"x":127.78,"y":159},{"x":132.07,"y":160},{"x":132.52,"y":161},{"x":133.94,"y":162},{"x":133.98,"y":163},{"x":136.83,"y":164},{"x":137.96,"y":165},{"x":138.14,"y":166},{"x":138.16,"y":167},{"x":138.58,"y":168},{"x":138.67,"y":169},{"x":139.02,"y":170},{"x":139.12,"y":172},{"x":139.19,"y":174},{"x":139.7,"y":175},{"x":139.94,"y":176},{"x":139.96,"y":177},{"x":140.0,"y":179},{"x":140.1,"y":181},{"x":140.22,"y":182},{"x":140.64,"y":183},{"x":140.85,"y":184},{"x":141.09,"y":185}];
+
+const mutedColor = '#898781';
+const gridColor = '#e1e0d9';
+const maxDays = 142;
+
+function commonOptions(formatter) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'nearest', intersect: false, axis: 'x' },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (items) => 'Month ' + (items[0].parsed.x / 30).toFixed(1),
+          label: (ctx) => ctx.dataset.label + ': ' + formatter(ctx.parsed.y)
+        }
+      }
+    },
+    scales: {
+      x: {
+        type: 'linear',
+        min: 0,
+        max: maxDays,
+        grid: { display: false },
+        ticks: {
+          color: mutedColor, font: { size: 11 },
+          callback: (v) => 'M' + Math.round(v / 30),
+          stepSize: 30
+        }
+      },
+      y: {
+        grid: { color: gridColor },
+        ticks: { color: mutedColor, font: { size: 11 }, callback: (v) => formatter(v) },
+        beginAtZero: true
+      }
+    }
+  };
+}
+
+new Chart(document.getElementById('netChart'), {
+  type: 'line',
+  data: { datasets: [
+    { label: '2025', data: net2025, borderColor: '#c3c2b7', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, borderDash: [4,3], tension: 0, order: 2 },
+    { label: '2026', data: net2026, borderColor: '#2a78d6', backgroundColor: 'rgba(42,120,214,0.1)', borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#2a78d6', fill: true, tension: 0, order: 1 }
+  ]},
+  options: commonOptions((v) => '£' + Number(v).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}))
+});
+
+new Chart(document.getElementById('ticketChart'), {
+  type: 'line',
+  data: { datasets: [
+    { label: '2025', data: tix2025, borderColor: '#c3c2b7', backgroundColor: 'transparent', borderWidth: 2, pointRadius: 0, pointHoverRadius: 4, borderDash: [4,3], tension: 0, order: 2 },
+    { label: '2026', data: tix2026, borderColor: '#1baf7a', backgroundColor: 'rgba(27,175,122,0.1)', borderWidth: 2, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#1baf7a', fill: true, tension: 0, order: 1 }
+  ]},
+  options: commonOptions((v) => Math.round(v))
+});
+
+const pieLabels = ['Full pass', 'Saturday pass', 'T-shirt', 'Sunday pass', 'Community fund', 'Friday night pass'];
+const pieValues = [7561.77, 700.00, 482.58, 90.00, 85.65, 75.00];
+const pieColors = ['#2a78d6', '#1baf7a', '#eda100', '#4a3aa7', '#e34948', '#e87ba4'];
+const pieTotal = pieValues.reduce((a,b) => a+b, 0);
+
+const legendEl = document.getElementById('pieLegend');
+pieLabels.forEach((label, i) => {
+  const pct = (pieValues[i] / pieTotal * 100).toFixed(1);
+  const item = document.createElement('span');
+  item.className = 'legend-item';
+  item.innerHTML = '<span class="swatch" style="background:' + pieColors[i] + ';"></span>' + label + ' ' + pct + '%';
+  legendEl.appendChild(item);
+});
+
+new Chart(document.getElementById('pieChart'), {
+  type: 'pie',
+  data: { labels: pieLabels, datasets: [{ data: pieValues, backgroundColor: pieColors, borderWidth: 2, borderColor: '#ffffff' }] },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => {
+            const pct = (ctx.parsed / pieTotal * 100).toFixed(1);
+            return ctx.label + ': £' + ctx.parsed.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' (' + pct + '%)';
+          }
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
