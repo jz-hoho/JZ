@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Event sales report</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    color: #1a1a1a;
+    background: #ffffff;
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+  }
+  p.subtitle {
+    color: #5f5e5a;
+    margin: 0 0 2rem;
+    font-size: 14px;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 2.5rem 0 0.5rem;
+    border-bottom: 1px solid #e1e0d9;
+    padding-bottom: 0.4rem;
+  }
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .metric-card {
+    background: #f7f6f3;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .metric-label {
+    font-size: 13px;
+    color: #5f5e5a;
+    margin: 0 0 4px;
+  }
+  .metric-value {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #5f5e5a;
+  }
+  .legend span.swatch {
+    display: inline-block;
+    width: 16px;
+    height: 2px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+  }
+  .chart-wrap {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    margin-bottom: 1rem;
+  }
+  .note {
+    font-size: 13px;
+    color: #5f5e5a;
+    margin-top: 0.5rem;
+  }
+  .callout {
+    background: #f7f6f3;
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    font-size: 13px;
+    color: #444441;
+    margin: 1rem 0 1.5rem;
+  }
+  footer {
+    margin-top: 3rem;
+    font-size: 12px;
+    color: #898781;
+    border-top: 1px solid #e1e0d9;
+    padding-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Event sales report</h1>
+<p class="subtitle">2024&ndash;2026 seasons, aligned by weeks before each event &middot; generated 29 June 2026</p>
+
+<div class="metrics">
+  <div class="metric-card">
+    <p class="metric-label">2026 net income so far</p>
+    <p class="metric-value">&pound;8,671.83</p>
+  </div>
+  <div class="metric-card">
+    <p class="metric-label">Projected final net income</p>
+    <p class="metric-value">~&pound;15,300</p>
+  </div>
+</div>
+
+<div class="callout">
+  All charts below align by <strong>weeks remaining before each year's event</strong> (event dates: 2024 Sep 13&ndash;15, 2025 Sep 19&ndash;21, 2026 Sep 25&ndash;27), not calendar date or weeks since sales opened. 2026 opened sales roughly 6 weeks earlier than 2024 or 2025 relative to its event &mdash; this view tests whether that head start translated into more sales at the same distance from the event.
+</div>
+
+<h2>Cumulative net income</h2>
+<div class="legend">
+  <span class="legend-item"><span class="swatch" style="background:#c3c2b7; border-top:1.5px dashed #c3c2b7;"></span>2024</span>
+  <span class="legend-item"><span class="swatch" style="background:#888780; border-top:1.5px dashed #888780;"></span>2025</span>
+  <span class="legend-item"><span class="swatch" style="background:#2a78d6;"></span>2026 (actual)</span>
+  <span class="legend-item"><span class="swatch" style="border-top:2px dashed #2a78d6;"></span>2026 (projected)</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="netChart" role="img" aria-label="Line chart comparing cumulative net income across 2024, 2025 and 2026, aligned by weeks remaining before each year's event. At 19 weeks before the event, 2024 had reached about £9,244 and 2025 about £6,824, while 2026 had only reached about £5,772 by the same point despite starting sales earlier. 2026's projection reaches roughly £15,274 by the event.">At 19 weeks before the event: 2024 had £9,244 cumulative net income, 2025 had £6,824, 2026 had only £5,772. 2026 projected to reach about £15,274 by the event.</canvas>
+</div>
+<p class="note">2026's dashed segment projects forward using the average shape of the 2024 and 2025 curves from the same point (13 weeks out) to the event &mdash; a model-based estimate, not a guarantee.</p>
+
+<h2>Cumulative ticket sales</h2>
+<div class="legend">
+  <span class="legend-item"><span class="swatch" style="background:#c3c2b7; border-top:1.5px dashed #c3c2b7;"></span>2024</span>
+  <span class="legend-item"><span class="swatch" style="background:#888780; border-top:1.5px dashed #888780;"></span>2025</span>
+  <span class="legend-item"><span class="swatch" style="background:#1baf7a;"></span>2026 (actual)</span>
+  <span class="legend-item"><span class="swatch" style="border-top:2px dashed #1baf7a;"></span>2026 (projected)</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="ticketChart" role="img" aria-label="Line chart comparing cumulative ticket sales across 2024, 2025 and 2026, aligned by weeks remaining before each year's event. At 19 weeks before the event, 2024 had sold about 78 tickets and 2025 about 52, while 2026 had only sold about 44 by the same point. 2026's projection reaches roughly 175 tickets by the event.">At 19 weeks before the event: 2024 had sold 78 tickets, 2025 had sold 52, 2026 had only sold 44. 2026 projected to reach about 175 tickets by the event.</canvas>
+</div>
+
+<h2>Sales rate &mdash; net income per week</h2>
+<div class="legend">
+  <span class="legend-item"><span class="swatch" style="background:#c3c2b7;"></span>2024</span>
+  <span class="legend-item"><span class="swatch" style="background:#888780;"></span>2025</span>
+  <span class="legend-item"><span class="swatch" style="background:#2a78d6;"></span>2026</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="rateNetChart" role="img" aria-label="Line chart of net income per week, smoothed with a 3-week rolling average, across 2024, 2025 and 2026, aligned by weeks before each event. 2024 and 2025 both show a sales surge around 17-19 weeks before the event, then settle into an ongoing weekly rate through to the event. 2026's data runs from its launch at 25 weeks before the event down to the most recent data at 13 weeks before, and shows a launch-week spike followed by a declining rate, lower than either prior year at the same point.">Weekly net income (3-week rolling average). 2024 and 2025 both surged around 17-19 weeks before the event then sustained an ongoing rate. 2026 (shown from its 25-week launch to the most recent data at 13 weeks before the event) shows a launch spike followed by a declining rate, lower than either prior year at the same point.</canvas>
+</div>
+<p class="note">Smoothed with a 3-week rolling average to reduce noise from individual order spikes. 2026 shown from its actual sales launch (25 weeks before the event) to the most recent data available (13 weeks before).</p>
+
+<h2>Sales rate &mdash; tickets per week</h2>
+<div class="legend">
+  <span class="legend-item"><span class="swatch" style="background:#c3c2b7;"></span>2024</span>
+  <span class="legend-item"><span class="swatch" style="background:#888780;"></span>2025</span>
+  <span class="legend-item"><span class="swatch" style="background:#1baf7a;"></span>2026</span>
+</div>
+<div class="chart-wrap">
+  <canvas id="rateTixChart" role="img" aria-label="Line chart of tickets sold per week, smoothed with a 3-week rolling average, across 2024, 2025 and 2026, aligned by weeks before each event. Both 2024 and 2025 peak around 17-19 weeks before the event then maintain a steady weekly pace. 2026's data runs from its launch at 25 weeks before the event down to the most recent data at 13 weeks before, showing a launch spike followed by a declining rate.">Tickets sold per week (3-week rolling average). 2024 and 2025 peak around 17-19 weeks before the event then hold a steady pace. 2026 (shown from its 25-week launch to the most recent data at 13 weeks before the event) shows a launch spike followed by a declining rate.</canvas>
+</div>
+<p class="note">Smoothed with a 3-week rolling average. 2026 shown from its actual sales launch (25 weeks before the event) to the most recent data available (13 weeks before).</p>
+
+<footer>
+  Net income figures are after Stripe and platform fees. Ticket counts are net of cancellations &mdash; each refund was traced to the specific ticket or extra it matched, rather than estimated. The projection assumes 2026 follows a similar pattern to the average of 2024 and 2025 from this point forward; treat it as a planning estimate, not a forecast. Hover over any chart for exact values.
+</footer>
+
+<script>
+const net2024 = [{"x":-19.17,"y":113.02},{"x":-19.17,"y":226.04},{"x":-19.17,"y":356.79},{"x":-19.17,"y":469.81},{"x":-19.17,"y":582.83},{"x":-19.17,"y":713.58},{"x":-19.17,"y":854.18},{"x":-19.17,"y":967.2},{"x":-19.17,"y":1079.04},{"x":-19.17,"y":1196.99},{"x":-19.17,"y":1327.74},{"x":-19.17,"y":1440.76},{"x":-19.17,"y":1571.51},{"x":-19.17,"y":1689.46},{"x":-19.17,"y":1830.06},{"x":-19.17,"y":1943.08},{"x":-19.17,"y":2061.03},{"x":-19.17,"y":2178.98},{"x":-19.17,"y":2292.0},{"x":-19.17,"y":2405.02},{"x":-19.17,"y":2535.77},{"x":-19.17,"y":2648.79},{"x":-19.17,"y":2778.18},{"x":-19.17,"y":3011.85},{"x":-19.17,"y":3147.53},{"x":-19.17,"y":3278.28},{"x":-19.17,"y":3396.23},{"x":-19.17,"y":3509.25},{"x":-19.17,"y":3622.27},{"x":-19.17,"y":3735.29},{"x":-19.17,"y":3848.31},{"x":-19.17,"y":3917.03},{"x":-19.17,"y":4030.05},{"x":-19.17,"y":4153.31},{"x":-19.17,"y":4266.33},{"x":-19.17,"y":4528.06},{"x":-19.17,"y":4754.33},{"x":-19.17,"y":4890.01},{"x":-19.17,"y":5007.96},{"x":-19.17,"y":5120.98},{"x":-19.17,"y":5251.73},{"x":-19.17,"y":5382.48},{"x":-19.17,"y":5513.23},{"x":-19.17,"y":5739.5},{"x":-19.17,"y":5852.52},{"x":-19.17,"y":5965.54},{"x":-19.17,"y":6194.77},{"x":-19.16,"y":6325.52},{"x":-19.16,"y":6551.79},{"x":-19.16,"y":6664.81},{"x":-19.16,"y":6795.56},{"x":-19.16,"y":6908.58},{"x":-19.16,"y":7039.74},{"x":-19.15,"y":7175.42},{"x":-19.15,"y":7288.44},{"x":-19.15,"y":7406.39},{"x":-19.15,"y":7632.66},{"x":-19.15,"y":7745.68},{"x":-19.12,"y":7858.7},{"x":-19.11,"y":8117.72},{"x":-19.11,"y":8235.67},{"x":-19.09,"y":8348.69},{"x":-19.09,"y":8572.61},{"x":-19.09,"y":8685.63},{"x":-19.08,"y":8791.77},{"x":-19.08,"y":8904.79},{"x":-19.07,"y":9131.06},{"x":-19.06,"y":9244.08},{"x":-18.93,"y":9320.68},{"x":-18.88,"y":9433.7},{"x":-18.88,"y":9546.72},{"x":-18.76,"y":9772.99},{"x":-18.73,"y":9903.74},{"x":-18.58,"y":10032.11},{"x":-18.45,"y":10150.06},{"x":-18.37,"y":10261.9},{"x":-18.37,"y":10391.29},{"x":-18.34,"y":10509.24},{"x":-18.3,"y":10733.12},{"x":-18.3,"y":10855.99},{"x":-18.09,"y":10972.71},{"x":-18.02,"y":11101.08},{"x":-17.95,"y":11231.83},{"x":-17.95,"y":11344.85},{"x":-17.88,"y":11462.8},{"x":-17.74,"y":11600.84},{"x":-17.61,"y":11712.68},{"x":-17.6,"y":11825.7},{"x":-17.58,"y":11938.72},{"x":-17.58,"y":12069.47},{"x":-17.44,"y":12295.72},{"x":-17.34,"y":12408.74},{"x":-16.65,"y":12521.76},{"x":-16.34,"y":12662.36},{"x":-16.2,"y":12543.98},{"x":-16.03,"y":12657.0},{"x":-15.92,"y":12898.47},{"x":-15.29,"y":12957.34},{"x":-15.15,"y":13088.09},{"x":-15.08,"y":13201.11},{"x":-14.93,"y":13341.71},{"x":-14.79,"y":13567.96},{"x":-14.34,"y":13334.95},{"x":-13.79,"y":13447.97},{"x":-12.97,"y":13559.81},{"x":-12.89,"y":13672.83},{"x":-12.74,"y":13731.7},{"x":-12.74,"y":13849.65},{"x":-12.74,"y":13961.49},{"x":-12.66,"y":14020.36},{"x":-12.65,"y":14138.3},{"x":-12.64,"y":14167.63},{"x":-12.59,"y":14280.65},{"x":-12.51,"y":14398.6},{"x":-12.49,"y":14462.39},{"x":-12.48,"y":14591.78},{"x":-12.48,"y":14668.38},{"x":-12.31,"y":14744.98},{"x":-12.3,"y":14858.0},{"x":-12.01,"y":14946.4},{"x":-11.62,"y":14980.66},{"x":-11.2,"y":15093.68},{"x":-11.19,"y":15229.36},{"x":-10.61,"y":15484.0},{"x":-9.78,"y":15595.84},{"x":-9.6,"y":15706.79},{"x":-9.38,"y":15837.54},{"x":-9.38,"y":15866.87},{"x":-9.33,"y":15979.89},{"x":-9.23,"y":16091.73},{"x":-9.17,"y":16204.75},{"x":-8.95,"y":16321.47},{"x":-8.87,"y":16439.42},{"x":-8.86,"y":16516.02},{"x":-8.78,"y":16545.35},{"x":-8.63,"y":16657.19},{"x":-8.45,"y":16770.21},{"x":-8.3,"y":16829.08},{"x":-8.21,"y":16887.95},{"x":-8.21,"y":17064.97},{"x":-8.18,"y":17123.84},{"x":-8.02,"y":17241.79},{"x":-8.02,"y":17300.66},{"x":-7.91,"y":17411.61},{"x":-7.88,"y":17522.56},{"x":-7.65,"y":17748.83},{"x":-7.62,"y":17861.85},{"x":-7.59,"y":17920.72},{"x":-7.38,"y":18049.09},{"x":-7.36,"y":18078.42},{"x":-7.35,"y":18107.75},{"x":-6.5,"y":18166.62},{"x":-6.5,"y":18279.64},{"x":-6.49,"y":18368.04},{"x":-6.37,"y":18446.6},{"x":-6.34,"y":18505.47},{"x":-6.33,"y":18579.61},{"x":-6.29,"y":18707.98},{"x":-6.15,"y":18825.93},{"x":-6.06,"y":18882.34},{"x":-6.05,"y":18911.67},{"x":-5.89,"y":19023.51},{"x":-5.76,"y":19263.03},{"x":-5.66,"y":19393.78},{"x":-5.64,"y":19506.8},{"x":-5.6,"y":19619.82},{"x":-4.93,"y":19678.69},{"x":-4.87,"y":19760.21},{"x":-4.73,"y":19873.23},{"x":-4.29,"y":19981.34},{"x":-4.22,"y":20040.21},{"x":-3.94,"y":20152.05},{"x":-2.94,"y":20265.07},{"x":-2.9,"y":20383.02},{"x":-2.6,"y":20442.08},{"x":-1.91,"y":20560.03},{"x":-1.89,"y":20589.45},{"x":-1.88,"y":20811.56},{"x":-1.77,"y":20869.81},{"x":-1.75,"y":20953.3},{"x":-1.62,"y":21017.09},{"x":-1.49,"y":21140.35},{"x":-1.49,"y":21169.37},{"x":-1.45,"y":21233.37},{"x":-1.33,"y":21292.43},{"x":-1.32,"y":21405.45},{"x":-1.3,"y":21528.32},{"x":-1.23,"y":21607.13},{"x":-1.22,"y":21666.19},{"x":-1.17,"y":21784.51},{"x":-1.15,"y":21843.38},{"x":-1.15,"y":21954.33},{"x":-1.12,"y":22070.12},{"x":-0.47,"y":22099.14},{"x":-0.28,"y":22212.52},{"x":-0.2,"y":22241.85},{"x":-0.14,"y":22354.87},{"x":-0.07,"y":22272.37},{"x":-0.03,"y":22331.43},{"x":0.03,"y":22390.49},{"x":0.07,"y":22503.51},{"x":0.07,"y":22562.38},{"x":0.1,"y":22651.06},{"x":0.12,"y":22680.48},{"x":0.14,"y":22739.35},{"x":0.19,"y":22798.22},{"x":0.2,"y":22857.09},{"x":0.26,"y":22945.79},{"x":0.53,"y":22927.79},{"x":0.53,"y":22909.79},{"x":0.53,"y":22891.79},{"x":0.53,"y":22879.79}];
+const net2025 = [{"x":-20.03,"y":123.26},{"x":-20.03,"y":246.13},{"x":-20.03,"y":374.33},{"x":-20.03,"y":639.98},{"x":-20.03,"y":783.0},{"x":-20.03,"y":926.02},{"x":-20.03,"y":1068.59},{"x":-20.03,"y":1353.94},{"x":-20.03,"y":1501.9},{"x":-20.03,"y":1623.48},{"x":-20.03,"y":1745.06},{"x":-20.03,"y":1863.39},{"x":-20.03,"y":1986.26},{"x":-20.03,"y":2109.52},{"x":-20.03,"y":2249.49},{"x":-20.03,"y":2338.18},{"x":-20.03,"y":2466.38},{"x":-20.03,"y":2589.25},{"x":-20.03,"y":2737.21},{"x":-20.03,"y":2980.59},{"x":-20.02,"y":3103.85},{"x":-20.02,"y":3251.81},{"x":-20.02,"y":3404.23},{"x":-20.02,"y":3547.25},{"x":-20.02,"y":3670.12},{"x":-20.02,"y":3813.14},{"x":-20.02,"y":3940.94},{"x":-20.02,"y":4085.75},{"x":-20.01,"y":4238.17},{"x":-20.01,"y":4361.43},{"x":-20.01,"y":4484.3},{"x":-19.96,"y":4766.68},{"x":-19.94,"y":4889.94},{"x":-19.92,"y":5135.89},{"x":-19.92,"y":5288.31},{"x":-19.89,"y":5411.57},{"x":-19.88,"y":5533.15},{"x":-19.8,"y":5779.87},{"x":-19.73,"y":5942.65},{"x":-19.64,"y":6070.85},{"x":-19.47,"y":6194.11},{"x":-19.34,"y":6253.17},{"x":-19.33,"y":6376.04},{"x":-19.31,"y":6528.46},{"x":-19.23,"y":6671.48},{"x":-19.0,"y":6823.9},{"x":-18.61,"y":6678.9},{"x":-18.52,"y":6821.92},{"x":-17.5,"y":7078.51},{"x":-17.16,"y":7201.77},{"x":-16.87,"y":7354.19},{"x":-16.74,"y":7477.06},{"x":-16.72,"y":7757.21},{"x":-16.46,"y":8042.56},{"x":-16.35,"y":8175.7},{"x":-16.17,"y":8298.96},{"x":-16.16,"y":8422.22},{"x":-16.09,"y":8565.24},{"x":-15.62,"y":8713.2},{"x":-15.43,"y":8983.67},{"x":-15.38,"y":9126.24},{"x":-15.29,"y":9249.11},{"x":-15.19,"y":9372.37},{"x":-15.01,"y":9218.74},{"x":-13.8,"y":9277.8},{"x":-13.48,"y":9524.52},{"x":-13.22,"y":9667.09},{"x":-13.15,"y":9922.89},{"x":-12.76,"y":10045.76},{"x":-12.75,"y":10168.63},{"x":-12.74,"y":10309.71},{"x":-12.73,"y":10432.58},{"x":-12.6,"y":10555.45},{"x":-12.03,"y":10732.47},{"x":-11.16,"y":10761.8},{"x":-11.16,"y":10879.74},{"x":-11.16,"y":10754.74},{"x":-11.07,"y":10784.07},{"x":-11.05,"y":10862.64},{"x":-11.04,"y":10921.51},{"x":-11.04,"y":11000.08},{"x":-11.0,"y":11142.65},{"x":-10.92,"y":11269.11},{"x":-10.73,"y":11395.57},{"x":-10.19,"y":11454.44},{"x":-10.18,"y":11577.31},{"x":-10.08,"y":11695.25},{"x":-9.91,"y":11754.12},{"x":-9.77,"y":11832.69},{"x":-9.65,"y":11950.63},{"x":-9.62,"y":12073.5},{"x":-9.59,"y":12132.37},{"x":-9.49,"y":12393.09},{"x":-9.3,"y":12535.66},{"x":-9.16,"y":12594.53},{"x":-9.16,"y":12734.5},{"x":-9.02,"y":12857.37},{"x":-8.86,"y":13009.79},{"x":-8.31,"y":13068.66},{"x":-8.11,"y":13191.53},{"x":-8.03,"y":13250.4},{"x":-8.02,"y":13373.27},{"x":-7.94,"y":13461.67},{"x":-7.94,"y":13505.3},{"x":-7.28,"y":13656.13},{"x":-7.23,"y":13897.58},{"x":-7.21,"y":13956.45},{"x":-7.19,"y":13985.78},{"x":-7.09,"y":13860.78},{"x":-6.91,"y":14003.35},{"x":-6.8,"y":14126.22},{"x":-6.78,"y":14254.02},{"x":-6.74,"y":14376.89},{"x":-6.32,"y":14455.46},{"x":-6.2,"y":14514.33},{"x":-6.04,"y":14632.27},{"x":-6.0,"y":14710.84},{"x":-5.32,"y":14769.71},{"x":-5.19,"y":15015.65},{"x":-4.81,"y":15148.37},{"x":-4.71,"y":15271.24},{"x":-4.65,"y":15640.25},{"x":-4.6,"y":15577.75},{"x":-4.49,"y":15699.33},{"x":-4.49,"y":15758.2},{"x":-4.49,"y":15879.78},{"x":-4.46,"y":15958.35},{"x":-4.45,"y":15987.68},{"x":-4.31,"y":16017.01},{"x":-4.3,"y":16159.58},{"x":-3.9,"y":16193.83},{"x":-3.44,"y":16233.01},{"x":-3.31,"y":16296.8},{"x":-3.06,"y":16428.13},{"x":-3.04,"y":16491.92},{"x":-2.82,"y":16624.64},{"x":-2.45,"y":16658.89},{"x":-2.37,"y":16794.01},{"x":-2.31,"y":16860.26},{"x":-2.02,"y":16997.9},{"x":-1.89,"y":17135.54},{"x":-1.78,"y":17233.79},{"x":-1.16,"y":17268.04},{"x":-1.1,"y":17331.83},{"x":-0.9,"y":17398.08},{"x":-0.89,"y":17540.65},{"x":-0.48,"y":17671.98},{"x":-0.32,"y":17735.77},{"x":-0.3,"y":17770.02},{"x":-0.29,"y":17803.91},{"x":-0.23,"y":17867.7},{"x":-0.22,"y":17891.85},{"x":-0.17,"y":17950.72},{"x":-0.15,"y":18018.17},{"x":-0.15,"y":18086.16},{"x":-0.07,"y":18120.41},{"x":-0.04,"y":18183.03},{"x":-0.04,"y":18217.28},{"x":-0.03,"y":18345.07},{"x":-0.02,"y":18476.4},{"x":0.0,"y":18609.12},{"x":0.06,"y":18672.91},{"x":0.09,"y":18706.53},{"x":0.13,"y":18839.25}];
+const net2026 = [{"x":-25.75,"y":129.02},{"x":-25.75,"y":297.44},{"x":-25.75,"y":421.54},{"x":-25.75,"y":545.64},{"x":-25.75,"y":669.74},{"x":-25.75,"y":813.54},{"x":-25.74,"y":942.56},{"x":-25.74,"y":1086.36},{"x":-25.74,"y":1215.38},{"x":-25.74,"y":1339.48},{"x":-25.66,"y":1483.28},{"x":-25.63,"y":1636.93},{"x":-25.62,"y":1770.88},{"x":-25.59,"y":2019.78},{"x":-25.59,"y":2163.58},{"x":-25.58,"y":2143.58},{"x":-25.58,"y":2272.6},{"x":-25.55,"y":2396.7},{"x":-25.47,"y":2518.52},{"x":-25.47,"y":2642.62},{"x":-25.43,"y":2765.42},{"x":-25.37,"y":2889.52},{"x":-25.22,"y":3013.62},{"x":-25.21,"y":3137.72},{"x":-24.92,"y":3261.82},{"x":-24.9,"y":3385.92},{"x":-24.44,"y":3510.02},{"x":-23.49,"y":3634.12},{"x":-23.33,"y":3880.42},{"x":-23.31,"y":4004.52},{"x":-22.74,"y":4292.41},{"x":-22.71,"y":4420.08},{"x":-22.46,"y":4544.18},{"x":-22.34,"y":4692.9},{"x":-22.05,"y":4834.07},{"x":-21.73,"y":4958.17},{"x":-21.04,"y":5106.89},{"x":-21.0,"y":5250.69},{"x":-21.0,"y":5374.79},{"x":-20.73,"y":5503.81},{"x":-19.47,"y":5627.91},{"x":-19.17,"y":5771.71},{"x":-17.79,"y":5920.43},{"x":-17.61,"y":6169.33},{"x":-17.61,"y":6216.63},{"x":-17.61,"y":6263.93},{"x":-17.61,"y":6311.23},{"x":-17.61,"y":6378.23},{"x":-17.6,"y":6445.23},{"x":-17.59,"y":6492.53},{"x":-17.59,"y":6578.22},{"x":-17.49,"y":6645.22},{"x":-17.48,"y":6894.12},{"x":-17.34,"y":6941.42},{"x":-16.95,"y":7073.21},{"x":-16.93,"y":7215.51},{"x":-16.78,"y":6955.51},{"x":-16.6,"y":6930.51},{"x":-16.3,"y":7071.68},{"x":-16.16,"y":7195.78},{"x":-16.06,"y":7218.64},{"x":-15.94,"y":7362.44},{"x":-15.5,"y":7409.74},{"x":-15.45,"y":7457.04},{"x":-15.38,"y":7518.73},{"x":-14.89,"y":7640.55},{"x":-14.77,"y":7762.37},{"x":-14.65,"y":7909.54},{"x":-14.62,"y":8033.64},{"x":-14.3,"y":8100.14},{"x":-13.79,"y":8243.94},{"x":-13.73,"y":8339.04},{"x":-13.45,"y":8487.76},{"x":-13.06,"y":8558.55},{"x":-12.79,"y":8648.54},{"x":-12.75,"y":8671.83}];
+const proj2026 = [{"x":-13,"y":8671.83},{"x":-12,"y":9508.71},{"x":-11,"y":9779.18},{"x":-10,"y":10102.74},{"x":-9,"y":10842.93},{"x":-8,"y":11421.7},{"x":-7,"y":11894.95},{"x":-6,"y":12525.59},{"x":-5,"y":12887.1},{"x":-4,"y":13522.5},{"x":-3,"y":13703.78},{"x":-2,"y":14018.38},{"x":-1,"y":14689.21},{"x":0,"y":15273.6}];
+
+const tix2024 = [{"x":-19.17,"y":1},{"x":-19.17,"y":2},{"x":-19.17,"y":3},{"x":-19.17,"y":4},{"x":-19.17,"y":5},{"x":-19.17,"y":6},{"x":-19.17,"y":7},{"x":-19.17,"y":8},{"x":-19.17,"y":9},{"x":-19.17,"y":10},{"x":-19.17,"y":11},{"x":-19.17,"y":12},{"x":-19.17,"y":13},{"x":-19.17,"y":14},{"x":-19.17,"y":15},{"x":-19.17,"y":16},{"x":-19.17,"y":17},{"x":-19.17,"y":18},{"x":-19.17,"y":19},{"x":-19.17,"y":20},{"x":-19.17,"y":21},{"x":-19.17,"y":22},{"x":-19.17,"y":23},{"x":-19.17,"y":25},{"x":-19.17,"y":26},{"x":-19.17,"y":27},{"x":-19.17,"y":28},{"x":-19.17,"y":29},{"x":-19.17,"y":30},{"x":-19.17,"y":31},{"x":-19.17,"y":32},{"x":-19.17,"y":33},{"x":-19.17,"y":34},{"x":-19.17,"y":35},{"x":-19.17,"y":36},{"x":-19.17,"y":38},{"x":-19.17,"y":40},{"x":-19.17,"y":41},{"x":-19.17,"y":42},{"x":-19.17,"y":43},{"x":-19.17,"y":44},{"x":-19.17,"y":45},{"x":-19.17,"y":46},{"x":-19.17,"y":48},{"x":-19.17,"y":49},{"x":-19.17,"y":50},{"x":-19.17,"y":52},{"x":-19.16,"y":53},{"x":-19.16,"y":55},{"x":-19.16,"y":56},{"x":-19.16,"y":57},{"x":-19.16,"y":58},{"x":-19.16,"y":59},{"x":-19.15,"y":60},{"x":-19.15,"y":61},{"x":-19.15,"y":62},{"x":-19.15,"y":64},{"x":-19.15,"y":65},{"x":-19.12,"y":66},{"x":-19.11,"y":68},{"x":-19.11,"y":69},{"x":-19.09,"y":70},{"x":-19.09,"y":72},{"x":-19.09,"y":73},{"x":-19.08,"y":74},{"x":-19.08,"y":75},{"x":-19.07,"y":77},{"x":-19.06,"y":78},{"x":-18.93,"y":79},{"x":-18.88,"y":80},{"x":-18.88,"y":81},{"x":-18.76,"y":83},{"x":-18.73,"y":84},{"x":-18.58,"y":85},{"x":-18.45,"y":86},{"x":-18.37,"y":87},{"x":-18.37,"y":88},{"x":-18.34,"y":89},{"x":-18.3,"y":91},{"x":-18.3,"y":92},{"x":-18.09,"y":93},{"x":-18.02,"y":94},{"x":-17.95,"y":95},{"x":-17.95,"y":96},{"x":-17.88,"y":97},{"x":-17.74,"y":98},{"x":-17.61,"y":99},{"x":-17.6,"y":100},{"x":-17.58,"y":101},{"x":-17.58,"y":102},{"x":-17.44,"y":104},{"x":-17.34,"y":105},{"x":-16.65,"y":106},{"x":-16.34,"y":107},{"x":-16.2,"y":106},{"x":-16.03,"y":107},{"x":-15.92,"y":109},{"x":-15.29,"y":110},{"x":-15.15,"y":111},{"x":-15.08,"y":112},{"x":-14.93,"y":113},{"x":-14.79,"y":115},{"x":-14.34,"y":115},{"x":-13.79,"y":116},{"x":-12.97,"y":117},{"x":-12.89,"y":118},{"x":-12.74,"y":119},{"x":-12.74,"y":121},{"x":-12.74,"y":122},{"x":-12.66,"y":124},{"x":-12.65,"y":126},{"x":-12.64,"y":127},{"x":-12.59,"y":128},{"x":-12.51,"y":130},{"x":-12.49,"y":131},{"x":-12.48,"y":132},{"x":-12.48,"y":133},{"x":-12.31,"y":134},{"x":-12.3,"y":135},{"x":-12.01,"y":137},{"x":-11.62,"y":138},{"x":-11.2,"y":139},{"x":-11.19,"y":140},{"x":-10.61,"y":142},{"x":-9.78,"y":143},{"x":-9.6,"y":144},{"x":-9.38,"y":145},{"x":-9.38,"y":146},{"x":-9.33,"y":147},{"x":-9.23,"y":148},{"x":-9.17,"y":149},{"x":-8.95,"y":150},{"x":-8.87,"y":151},{"x":-8.86,"y":152},{"x":-8.78,"y":153},{"x":-8.63,"y":154},{"x":-8.45,"y":155},{"x":-8.3,"y":157},{"x":-8.21,"y":158},{"x":-8.21,"y":161},{"x":-8.18,"y":162},{"x":-8.02,"y":164},{"x":-8.02,"y":165},{"x":-7.91,"y":166},{"x":-7.88,"y":167},{"x":-7.65,"y":169},{"x":-7.62,"y":170},{"x":-7.59,"y":171},{"x":-7.38,"y":172},{"x":-7.36,"y":173},{"x":-7.35,"y":174},{"x":-6.5,"y":175},{"x":-6.5,"y":176},{"x":-6.49,"y":178},{"x":-6.37,"y":179},{"x":-6.34,"y":180},{"x":-6.33,"y":181},{"x":-6.29,"y":182},{"x":-6.15,"y":183},{"x":-6.06,"y":184},{"x":-6.05,"y":185},{"x":-5.89,"y":186},{"x":-5.76,"y":188},{"x":-5.66,"y":189},{"x":-5.64,"y":190},{"x":-5.6,"y":191},{"x":-4.93,"y":192},{"x":-4.87,"y":193},{"x":-4.73,"y":194},{"x":-4.29,"y":195},{"x":-4.22,"y":196},{"x":-3.94,"y":197},{"x":-2.94,"y":198},{"x":-2.9,"y":199},{"x":-2.6,"y":200},{"x":-1.91,"y":201},{"x":-1.89,"y":202},{"x":-1.88,"y":204},{"x":-1.77,"y":205},{"x":-1.75,"y":206},{"x":-1.62,"y":207},{"x":-1.49,"y":208},{"x":-1.49,"y":209},{"x":-1.45,"y":211},{"x":-1.33,"y":212},{"x":-1.32,"y":213},{"x":-1.3,"y":214},{"x":-1.23,"y":215},{"x":-1.22,"y":216},{"x":-1.17,"y":217},{"x":-1.15,"y":218},{"x":-1.15,"y":219},{"x":-1.12,"y":220},{"x":-0.47,"y":221},{"x":-0.28,"y":222},{"x":-0.2,"y":223},{"x":-0.14,"y":224},{"x":-0.07,"y":223},{"x":-0.03,"y":225},{"x":0.03,"y":226},{"x":0.07,"y":227},{"x":0.07,"y":228},{"x":0.1,"y":230},{"x":0.12,"y":231},{"x":0.14,"y":232},{"x":0.19,"y":233},{"x":0.2,"y":234},{"x":0.26,"y":235},{"x":0.53,"y":235},{"x":0.53,"y":235},{"x":0.53,"y":235},{"x":0.53,"y":235}];
+const tix2025 = [{"x":-20.03,"y":1},{"x":-20.03,"y":2},{"x":-20.03,"y":3},{"x":-20.03,"y":5},{"x":-20.03,"y":6},{"x":-20.03,"y":7},{"x":-20.03,"y":8},{"x":-20.03,"y":10},{"x":-20.03,"y":11},{"x":-20.03,"y":12},{"x":-20.03,"y":13},{"x":-20.03,"y":14},{"x":-20.03,"y":15},{"x":-20.03,"y":16},{"x":-20.03,"y":17},{"x":-20.03,"y":18},{"x":-20.03,"y":19},{"x":-20.03,"y":20},{"x":-20.03,"y":21},{"x":-20.03,"y":23},{"x":-20.02,"y":24},{"x":-20.02,"y":25},{"x":-20.02,"y":26},{"x":-20.02,"y":27},{"x":-20.02,"y":28},{"x":-20.02,"y":29},{"x":-20.02,"y":30},{"x":-20.02,"y":31},{"x":-20.01,"y":32},{"x":-20.01,"y":33},{"x":-20.01,"y":34},{"x":-19.96,"y":36},{"x":-19.94,"y":37},{"x":-19.92,"y":39},{"x":-19.92,"y":40},{"x":-19.89,"y":41},{"x":-19.88,"y":42},{"x":-19.8,"y":44},{"x":-19.73,"y":45},{"x":-19.64,"y":46},{"x":-19.47,"y":47},{"x":-19.34,"y":48},{"x":-19.33,"y":49},{"x":-19.31,"y":50},{"x":-19.23,"y":51},{"x":-19.0,"y":52},{"x":-18.61,"y":51},{"x":-18.52,"y":52},{"x":-17.5,"y":54},{"x":-17.16,"y":55},{"x":-16.87,"y":56},{"x":-16.74,"y":57},{"x":-16.72,"y":59},{"x":-16.46,"y":61},{"x":-16.35,"y":62},{"x":-16.17,"y":63},{"x":-16.16,"y":64},{"x":-16.09,"y":65},{"x":-15.62,"y":66},{"x":-15.43,"y":68},{"x":-15.38,"y":69},{"x":-15.29,"y":70},{"x":-15.19,"y":71},{"x":-15.01,"y":70},{"x":-13.8,"y":71},{"x":-13.48,"y":73},{"x":-13.22,"y":74},{"x":-13.15,"y":76},{"x":-12.76,"y":77},{"x":-12.75,"y":78},{"x":-12.74,"y":79},{"x":-12.73,"y":80},{"x":-12.6,"y":81},{"x":-12.03,"y":83},{"x":-11.16,"y":84},{"x":-11.16,"y":86},{"x":-11.16,"y":85},{"x":-11.07,"y":86},{"x":-11.05,"y":87},{"x":-11.04,"y":89},{"x":-11.04,"y":90},{"x":-11.0,"y":91},{"x":-10.92,"y":92},{"x":-10.73,"y":93},{"x":-10.19,"y":94},{"x":-10.18,"y":95},{"x":-10.08,"y":97},{"x":-9.91,"y":98},{"x":-9.77,"y":99},{"x":-9.65,"y":101},{"x":-9.62,"y":102},{"x":-9.59,"y":103},{"x":-9.49,"y":105},{"x":-9.3,"y":106},{"x":-9.16,"y":107},{"x":-9.16,"y":108},{"x":-9.02,"y":109},{"x":-8.86,"y":110},{"x":-8.31,"y":112},{"x":-8.11,"y":113},{"x":-8.03,"y":114},{"x":-8.02,"y":115},{"x":-7.94,"y":117},{"x":-7.94,"y":118},{"x":-7.28,"y":119},{"x":-7.23,"y":121},{"x":-7.21,"y":122},{"x":-7.19,"y":123},{"x":-7.09,"y":122},{"x":-6.91,"y":123},{"x":-6.8,"y":124},{"x":-6.78,"y":125},{"x":-6.74,"y":126},{"x":-6.32,"y":127},{"x":-6.2,"y":128},{"x":-6.04,"y":130},{"x":-6.0,"y":131},{"x":-5.32,"y":132},{"x":-5.19,"y":134},{"x":-4.81,"y":135},{"x":-4.71,"y":136},{"x":-4.65,"y":139},{"x":-4.6,"y":139},{"x":-4.49,"y":140},{"x":-4.49,"y":141},{"x":-4.49,"y":142},{"x":-4.46,"y":143},{"x":-4.45,"y":144},{"x":-4.31,"y":145},{"x":-4.3,"y":146},{"x":-3.9,"y":147},{"x":-3.44,"y":148},{"x":-3.31,"y":149},{"x":-3.06,"y":150},{"x":-3.04,"y":151},{"x":-2.82,"y":152},{"x":-2.45,"y":153},{"x":-2.37,"y":154},{"x":-2.31,"y":155},{"x":-2.02,"y":156},{"x":-1.89,"y":157},{"x":-1.78,"y":159},{"x":-1.16,"y":160},{"x":-1.1,"y":161},{"x":-0.9,"y":162},{"x":-0.89,"y":163},{"x":-0.48,"y":164},{"x":-0.32,"y":165},{"x":-0.3,"y":166},{"x":-0.29,"y":167},{"x":-0.23,"y":168},{"x":-0.22,"y":169},{"x":-0.17,"y":170},{"x":-0.15,"y":172},{"x":-0.15,"y":174},{"x":-0.07,"y":175},{"x":-0.04,"y":176},{"x":-0.04,"y":177},{"x":-0.03,"y":179},{"x":-0.02,"y":181},{"x":0.0,"y":182},{"x":0.06,"y":183},{"x":0.09,"y":184},{"x":0.13,"y":185}];
+const tix2026 = [{"x":-25.75,"y":1},{"x":-25.75,"y":2},{"x":-25.75,"y":3},{"x":-25.75,"y":4},{"x":-25.75,"y":5},{"x":-25.75,"y":6},{"x":-25.74,"y":7},{"x":-25.74,"y":8},{"x":-25.74,"y":9},{"x":-25.74,"y":10},{"x":-25.66,"y":11},{"x":-25.63,"y":12},{"x":-25.62,"y":13},{"x":-25.59,"y":15},{"x":-25.59,"y":16},{"x":-25.58,"y":16},{"x":-25.58,"y":17},{"x":-25.55,"y":18},{"x":-25.47,"y":19},{"x":-25.47,"y":20},{"x":-25.43,"y":21},{"x":-25.37,"y":22},{"x":-25.22,"y":23},{"x":-25.21,"y":24},{"x":-24.92,"y":25},{"x":-24.9,"y":26},{"x":-24.44,"y":27},{"x":-23.49,"y":28},{"x":-23.33,"y":30},{"x":-23.31,"y":31},{"x":-22.74,"y":33},{"x":-22.71,"y":34},{"x":-22.46,"y":35},{"x":-22.34,"y":36},{"x":-22.05,"y":37},{"x":-21.73,"y":38},{"x":-21.04,"y":39},{"x":-21.0,"y":40},{"x":-21.0,"y":41},{"x":-20.73,"y":42},{"x":-19.47,"y":43},{"x":-19.17,"y":44},{"x":-17.79,"y":45},{"x":-17.61,"y":47},{"x":-17.61,"y":48},{"x":-17.61,"y":49},{"x":-17.61,"y":50},{"x":-17.61,"y":51},{"x":-17.6,"y":52},{"x":-17.59,"y":53},{"x":-17.59,"y":55},{"x":-17.49,"y":56},{"x":-17.48,"y":58},{"x":-17.34,"y":59},{"x":-16.95,"y":62},{"x":-16.93,"y":63},{"x":-16.78,"y":61},{"x":-16.6,"y":60},{"x":-16.3,"y":61},{"x":-16.16,"y":62},{"x":-16.06,"y":63},{"x":-15.94,"y":64},{"x":-15.5,"y":65},{"x":-15.45,"y":66},{"x":-15.38,"y":67},{"x":-14.89,"y":68},{"x":-14.77,"y":69},{"x":-14.65,"y":70},{"x":-14.62,"y":71},{"x":-14.3,"y":72},{"x":-13.79,"y":73},{"x":-13.73,"y":75},{"x":-13.45,"y":76},{"x":-13.06,"y":78},{"x":-12.79,"y":80},{"x":-12.75,"y":81}];
+const proj_tix2026 = [{"x":-13,"y":81.0},{"x":-12,"y":92.1},{"x":-11,"y":97.4},{"x":-10,"y":101.3},{"x":-9,"y":110.1},{"x":-8,"y":118.9},{"x":-7,"y":125.8},{"x":-6,"y":134.4},{"x":-5,"y":138.1},{"x":-4,"y":146.2},{"x":-3,"y":149.2},{"x":-2,"y":153.0},{"x":-1,"y":162.6},{"x":0,"y":175.0}];
+
+const rateNet2024 = [{"x":-27,"y":0.0},{"x":-26,"y":0.0},{"x":-25,"y":0.0},{"x":-24,"y":0.0},{"x":-23,"y":0.0},{"x":-22,"y":0.0},{"x":-21,"y":0.0},{"x":-20,"y":0.0},{"x":-19,"y":3081.36},{"x":-18,"y":3700.36},{"x":-17,"y":4136.25},{"x":-16,"y":1137.64},{"x":-15,"y":700.01},{"x":-14,"y":308.74},{"x":-13,"y":263.66},{"x":-12,"y":581.76},{"x":-11,"y":631.47},{"x":-10,"y":678.68},{"x":-9,"y":419.45},{"x":-8,"y":690.43},{"x":-7,"y":874.58},{"x":-6,"y":902.31},{"x":-5,"y":773.05},{"x":-4,"y":644.15},{"x":-3,"y":413.46},{"x":-2,"y":274.09},{"x":-1,"y":676.64},{"x":0,"y":726.46}];
+const rateNet2025 = [{"x":-27,"y":0.0},{"x":-26,"y":0.0},{"x":-25,"y":0.0},{"x":-24,"y":0.0},{"x":-23,"y":0.0},{"x":-22,"y":0.0},{"x":-21,"y":0.0},{"x":-20,"y":1494.77},{"x":-19,"y":2274.63},{"x":-18,"y":2273.97},{"x":-17,"y":905.82},{"x":-16,"y":580.45},{"x":-15,"y":798.94},{"x":-14,"y":672.32},{"x":-13,"y":452.55},{"x":-12,"y":504.58},{"x":-11,"y":641.3},{"x":-10,"y":590.79},{"x":-9,"y":708.3},{"x":-8,"y":743.54},{"x":-7,"y":721.84},{"x":-6,"y":617.82},{"x":-5,"y":547.46},{"x":-4,"y":766.27},{"x":-3,"y":593.69},{"x":-2,"y":660.75},{"x":-1,"y":390.75},{"x":0,"y":661.49}];
+const rateNet2026 = [{"x":-25,"y":1045.91},{"x":-24,"y":1170.01},{"x":-23,"y":1334.84},{"x":-22,"y":565.45},{"x":-21,"y":580.22},{"x":-20,"y":499.76},{"x":-19,"y":312.55},{"x":-18,"y":173.67},{"x":-17,"y":479.2},{"x":-16,"y":482.31},{"x":-15,"y":582.34},{"x":-14,"y":386.24},{"x":-13,"y":446.64}];
+
+const rateTix2024 = [{"x":-27,"y":0.0},{"x":-26,"y":0.0},{"x":-25,"y":0.0},{"x":-24,"y":0.0},{"x":-23,"y":0.0},{"x":-22,"y":0.0},{"x":-21,"y":0.0},{"x":-20,"y":0.0},{"x":-19,"y":26.0},{"x":-18,"y":31.33},{"x":-17,"y":35.0},{"x":-16,"y":9.67},{"x":-15,"y":6.0},{"x":-14,"y":3.33},{"x":-13,"y":3.0},{"x":-12,"y":8.33},{"x":-11,"y":8.33},{"x":-10,"y":8.67},{"x":-9,"y":4.0},{"x":-8,"y":8.33},{"x":-7,"y":10.67},{"x":-6,"y":12.0},{"x":-5,"y":8.67},{"x":-4,"y":7.33},{"x":-3,"y":4.0},{"x":-2,"y":3.0},{"x":-1,"y":8.0},{"x":0,"y":9.33}];
+const rateTix2025 = [{"x":-27,"y":0.0},{"x":-26,"y":0.0},{"x":-25,"y":0.0},{"x":-24,"y":0.0},{"x":-23,"y":0.0},{"x":-22,"y":0.0},{"x":-21,"y":0.0},{"x":-20,"y":11.33},{"x":-19,"y":17.33},{"x":-18,"y":17.33},{"x":-17,"y":7.0},{"x":-16,"y":4.33},{"x":-15,"y":6.0},{"x":-14,"y":5.0},{"x":-13,"y":3.67},{"x":-12,"y":4.33},{"x":-11,"y":7.0},{"x":-10,"y":7.0},{"x":-9,"y":8.67},{"x":-8,"y":8.0},{"x":-7,"y":8.33},{"x":-6,"y":7.33},{"x":-5,"y":6.33},{"x":-4,"y":8.0},{"x":-3,"y":6.67},{"x":-2,"y":7.33},{"x":-1,"y":5.0},{"x":0,"y":10.0}];
+const rateTix2026 = [{"x":-25,"y":8.0},{"x":-24,"y":9.0},{"x":-23,"y":10.33},{"x":-22,"y":4.33},{"x":-21,"y":4.33},{"x":-20,"y":3.67},{"x":-19,"y":2.33},{"x":-18,"y":1.33},{"x":-17,"y":5.67},{"x":-16,"y":6.33},{"x":-15,"y":7.67},{"x":-14,"y":4.33},{"x":-13,"y":5.0}];
+
+const mutedColor = '#898781';
+const gridColor = '#e1e0d9';
+
+function cumulativeOptions(formatter) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'nearest', intersect: false, axis: 'x' },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (items) => (-items[0].parsed.x).toFixed(1) + ' weeks before event',
+          label: (ctx) => ctx.dataset.label + ': ' + formatter(ctx.parsed.y)
+        }
+      }
+    },
+    scales: {
+      x: {
+        type: 'linear', min: -27, max: 1,
+        grid: { display: false },
+        ticks: { color: mutedColor, font: { size: 11 }, callback: (v) => Math.round(-v) + 'w', stepSize: 4 }
+      },
+      y: {
+        grid: { color: gridColor },
+        ticks: { color: mutedColor, font: { size: 11 }, callback: (v) => formatter(v) },
+        beginAtZero: true
+      }
+    }
+  };
+}
+
+function rateOptions(formatter) {
+  return {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'nearest', intersect: false, axis: 'x' },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          title: (items) => (-items[0].parsed.x).toFixed(0) + ' weeks before event',
+          label: (ctx) => ctx.dataset.label + ': ' + formatter(ctx.parsed.y) + ' / week (3wk avg)'
+        }
+      }
+    },
+    scales: {
+      x: {
+        type: 'linear', min: -27, max: 0,
+        grid: { display: false },
+        ticks: { color: mutedColor, font: { size: 11 }, callback: (v) => Math.round(-v) + 'w', stepSize: 4 }
+      },
+      y: {
+        grid: { color: gridColor },
+        ticks: { color: mutedColor, font: { size: 11 }, callback: (v) => formatter(v) },
+        beginAtZero: true
+      }
+    }
+  };
+}
+
+new Chart(document.getElementById('netChart'), {
+  type: 'line',
+  data: { datasets: [
+    { label: '2024', data: net2024, borderColor: '#c3c2b7', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, borderDash: [4,3], tension: 0, order: 3 },
+    { label: '2025', data: net2025, borderColor: '#888780', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, borderDash: [2,2], tension: 0, order: 2 },
+    { label: '2026', data: net2026, borderColor: '#2a78d6', backgroundColor: 'rgba(42,120,214,0.1)', borderWidth: 2.2, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#2a78d6', fill: true, tension: 0, order: 1 },
+    { label: '2026 projected', data: proj2026, borderColor: '#2a78d6', backgroundColor: 'transparent', borderWidth: 2.2, borderDash: [6,4], pointRadius: 0, pointHoverRadius: 5, tension: 0, order: 1 }
+  ]},
+  options: cumulativeOptions((v) => '£' + Number(v).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0}))
+});
+
+new Chart(document.getElementById('ticketChart'), {
+  type: 'line',
+  data: { datasets: [
+    { label: '2024', data: tix2024, borderColor: '#c3c2b7', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, borderDash: [4,3], tension: 0, order: 3 },
+    { label: '2025', data: tix2025, borderColor: '#888780', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, borderDash: [2,2], tension: 0, order: 2 },
+    { label: '2026', data: tix2026, borderColor: '#1baf7a', backgroundColor: 'rgba(27,175,122,0.1)', borderWidth: 2.2, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#1baf7a', fill: true, tension: 0, order: 1 },
+    { label: '2026 projected', data: proj_tix2026, borderColor: '#1baf7a', backgroundColor: 'transparent', borderWidth: 2.2, borderDash: [6,4], pointRadius: 0, pointHoverRadius: 5, tension: 0, order: 1 }
+  ]},
+  options: cumulativeOptions((v) => Math.round(v))
+});
+
+new Chart(document.getElementById('rateNetChart'), {
+  type: 'line',
+  data: { datasets: [
+    { label: '2024', data: rateNet2024, borderColor: '#c3c2b7', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, tension: 0.25, order: 3 },
+    { label: '2025', data: rateNet2025, borderColor: '#888780', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, tension: 0.25, order: 2 },
+    { label: '2026', data: rateNet2026, borderColor: '#2a78d6', backgroundColor: 'transparent', borderWidth: 2.2, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#2a78d6', tension: 0.25, order: 1 }
+  ]},
+  options: rateOptions((v) => '£' + Number(v).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0}))
+});
+
+new Chart(document.getElementById('rateTixChart'), {
+  type: 'line',
+  data: { datasets: [
+    { label: '2024', data: rateTix2024, borderColor: '#c3c2b7', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, tension: 0.25, order: 3 },
+    { label: '2025', data: rateTix2025, borderColor: '#888780', backgroundColor: 'transparent', borderWidth: 1.5, pointRadius: 0, pointHoverRadius: 4, tension: 0.25, order: 2 },
+    { label: '2026', data: rateTix2026, borderColor: '#1baf7a', backgroundColor: 'transparent', borderWidth: 2.2, pointRadius: 0, pointHoverRadius: 5, pointHoverBackgroundColor: '#1baf7a', tension: 0.25, order: 1 }
+  ]},
+  options: rateOptions((v) => Number(v).toFixed(1))
+});
+</script>
+</body>
+</html>
