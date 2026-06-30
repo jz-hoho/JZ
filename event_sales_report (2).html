@@ -100,8 +100,8 @@
 </head>
 <body>
 
-<h1>Event sales report</h1>
-<p class="subtitle">2024&ndash;2026 seasons, aligned by weeks before each event &middot; generated 29 June 2026</p>
+<h1>ELX sales report</h1>
+<p class="subtitle">ELX sales 2024-2026 (updated 29 June 2026)</p>
 
 <div class="metrics">
   <div class="metric-card">
@@ -115,7 +115,7 @@
 </div>
 
 <div class="callout">
-  All charts below align by <strong>weeks remaining before each year's event</strong> (event dates: 2024 Sep 13&ndash;15, 2025 Sep 19&ndash;21, 2026 Sep 25&ndash;27). 2026 opened sales roughly 6 weeks earlier than the previous years.
+  All charts align by <strong>weeks remaining before each year's event</strong> (event dates: 2024 Sep 13&ndash;15, 2025 Sep 19&ndash;21, 2026 Sep 25&ndash;27). 2026 opened sales roughly 6 weeks earlier than the previous years.
 </div>
 
 <h2>Cumulative net income</h2>
@@ -128,7 +128,7 @@
 <div class="chart-wrap">
   <canvas id="netChart" role="img" aria-label="Line chart comparing cumulative net income across 2024, 2025 and 2026, aligned by weeks remaining before each year's event. At 19 weeks before the event, 2024 had reached about £9,244 and 2025 about £6,824, while 2026 had only reached about £5,772 by the same point despite starting sales earlier. 2026's projection reaches roughly £15,274 by the event.">At 19 weeks before the event: 2024 had £9,244 cumulative net income, 2025 had £6,824, 2026 had only £5,772. 2026 projected to reach about £15,274 by the event.</canvas>
 </div>
-<p class="note">2026 projection is made using the average shape of the 2024 and 2025 curves from the current timepoint (13 weeks out to the event).</p>
+<p class="note">2026 projection is made using the average shape of the 2024 and 2025 curves from the current timepoint (13 weeks out to the event). At 19 weeks before the event, 2024 reached £9,244 and 2025 reached £6,824, while this year we only reached about £5,772 by the same point. Following the current trend, we are set to make £15,274 by the time of the event (roughly 3K short).</p>
 
 <h2>Cumulative ticket sales</h2>
 <div class="legend">
@@ -140,6 +140,7 @@
 <div class="chart-wrap">
   <canvas id="ticketChart" role="img" aria-label="Line chart comparing cumulative ticket sales across 2024, 2025 and 2026, aligned by weeks remaining before each year's event. At 19 weeks before the event, 2024 had sold about 78 tickets and 2025 about 52, while this year we sold about 44 by the same point. This year's projection reaches roughly 175 tickets (of all types) by the event date.">At 19 weeks before the event: 2024 had sold 78 tickets, 2025 had sold 52, 2026 had only sold 44. 2026 projected to reach about 175 tickets by the event.</canvas>
 </div>
+  <p class="note">At 19 weeks before the event: 2024 had sold 78 tickets, 2025 had sold 52, 2026 had only sold 44. This year we are projected to sell about 175 tickets (of all types) at the current sales rate - similar to last year.</p>
 
 <h2>Sales rate &mdash; net income per week</h2>
 <div class="legend">
@@ -150,7 +151,7 @@
 <div class="chart-wrap">
   <canvas id="rateNetChart" role="img" aria-label="Line chart of net income per week (smoothed using a 3-week rolling average), across 2024, 2025 and 2026, aligned by weeks before the event. 2024 and 2025 both show a sales surge around 17-19 weeks before the event, then settle into an ongoing weekly rate through to the event. This year's data runs from our sales launch at 25 weeks before the event to 29/06/206, roughly 13 weeks before. There is a launch-week spike (roughly 3x smaller than usual) followed by a declining rate, lower than either prior year at the same point.">Weekly net income (3-week rolling average). 2024 and 2025 both surged around 17-19 weeks before the event then sustained an ongoing rate. This year shows a launch spike followed by a declining rate, lower than either prior year at the same point.</canvas>
 </div>
-<p class="note">Smoothed with a 3-week rolling average to reduce noise from individual purchases - allows visualising the sales trends more accurately.</p>
+<p class="note">Smoothed with a 3-week rolling average to reduce noise from individual purchases - allows visualising the sales trends more accurately. 2024 and 2025 both surged around 17-19 weeks before the event, then sustained a steady rate. This year shows a smaller-than-usual launch spike followed by a roughly declining sales rate, lower than either prior year at the same point.</p>
 
 <h2>Sales rate &mdash; tickets per week</h2>
 <div class="legend">
@@ -161,7 +162,7 @@
 <div class="chart-wrap">
   <canvas id="rateTixChart" role="img" aria-label="Line chart of tickets sold per week, smoothed with a 3-week rolling average, across 2024, 2025 and 2026, aligned by weeks before each event. Both 2024 and 2025 peak around 17-19 weeks before the event then maintain a steady weekly pace. This year's data runs from our sales launch at 25 weeks before the event to 29/06/206, roughly 13 weeks before. There is a launch-week spike (roughly 3x smaller than usual) followed by a declining rate, lower than either prior year at the same point.">Tickets sold per week (3-week rolling average). 2024 and 2025 peak around 17-19 weeks before the event then hold a steady pace. 2026 (shown from its 25-week launch to the most recent data at 13 weeks before the event) shows a launch spike followed by a declining rate.</canvas>
 </div>
-<p class="note">Smoothed with a 3-week rolling average. 2026 shown from its actual sales launch (25 weeks before the event) to the most recent data available (13 weeks before).</p>
+<p class="note">As above</p>
 
 <footer>
   Net income figures are after Stripe and platform fees. Ticket counts are net of cancellations. The projection assumes 2026 follows a similar pattern to the previous years from this point forward. Hover over any chart for exact values.
